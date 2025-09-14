@@ -6,11 +6,12 @@ const modalBody = document.querySelector('.modal-body');
 var keys = [];
 var values = [];
 var objs = [];
+var objsOriginal = []
 let excelData = [];
 let dataFilter;
 
 
-function readFile() {
+(function readFile() {
     document.getElementById('upload').addEventListener('change', function (e) {
         const file = e.target.files[0];
         const reader = new FileReader();
@@ -28,14 +29,13 @@ function readFile() {
             document.querySelector('.prefix').style.display = 'block';
             App();
             objs = toObject(keys, values);
+            objsOriginal = objs;
             render(objs);
         };
 
         reader.readAsArrayBuffer(file);
     });
-}
-
-readFile();
+})()
 
 function App() {
     let isFirst = true;
@@ -45,11 +45,6 @@ function App() {
             isFirst = false;
         } else {
             values.push(row);
-        }
-    });
-    document.addEventListener("onblur", e => {
-        if (e.target.classList.contains("filter")) {
-            console.log(e.target.value);
         }
     });
 }
@@ -79,13 +74,14 @@ function render(objs) {
     valueEle.innerHTML = objs.map(obj =>
         '<tr>' + keys.map(k => `<td>${obj[k]}</td>`).join('') + '</tr>'
     ).join('');
+
     for (const [key, value] of Object.entries(objs[0])) {
         let type = 'number';
         if (typeof value === "string") continue;
 
         modalBody.innerHTML += `
-            <input type='${type}' name='${key}' placeholder='${key}' id='${key}'>
-        `;
+                <input type='${type}' name='${key}' placeholder='${key}' id='${key}'>
+                `;
     }
 
 }
@@ -104,6 +100,12 @@ function filter() {
     modalBody.innerHTML = '';
     App();
     objs = applyFilter(objs, dataFilter)
+    if (objs.length === 0) {
+       alert('Không có dữ liệu, reset lại file gốc');
+        objs = [...objsOriginal]; // reset về dữ liệu gốc
+    } else {
+        modalBody.innerHTML = ''; // clear inputs rồi render filter
+    }
     render(objs);
 }
 
