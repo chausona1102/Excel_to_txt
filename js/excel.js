@@ -23,6 +23,9 @@ function readFile() {
             const worksheet = workbook.Sheets[firstSheetName];
 
             excelData = XLSX.utils.sheet_to_json(worksheet, { header: 1 });
+            document.querySelector('.btn-export').style.display = 'block';
+            document.querySelector('.btn-filter').style.display = 'block';
+            document.querySelector('.prefix').style.display = 'block';
             App();
             objs = toObject(keys, values);
             render(objs);

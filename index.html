@@ -13,14 +13,36 @@
     <script src="https://cdn.jsdelivr.net/npm/xlsx/dist/xlsx.full.min.js"></script>
     <title>Works with Excel</title>
 </head>
-
+<style> 
+    html {
+        padding: 20px;
+    }
+    #wrapper {
+    }
+    h1.heading {
+        padding: 20px;
+        font-family: Verdana, Geneva, Tahoma, sans-serif;
+        text-align: center;
+    }
+    .btn-filter, .btn-export {
+        display: none;
+        margin: 4px;
+        background-color: #f3f1f1;
+        border: 1px solid #000;
+    }
+    .btn-export {padding: 4px 8px;}
+    .prefix {
+        display: none;
+    }
+</style>
 <body>
     <div id="wrapper">
         <h1 class="heading">Excel to txt</h1>
         <div id="content" class="container">
             <input type="file" id="upload" accept=".xlsx, .xls" />
             <div id="output">
-                <button type="button" class="btn" data-bs-toggle="modal" data-bs-target="#exampleModal">
+                <button type="button" class="btn btn-filter" data-bs-toggle="modal" data-bs-target="#exampleModal">
+                    Lọc
                     <i class="fa-solid fa-filter"></i>
                 </button>
                 <table class="table">
@@ -34,8 +56,10 @@
                     </tbody>
                 </table>
             </div>
-            <input type="text" class="prefix">
-            <button onclick="exportCell()">Export</button>
+            <div class="d-flex">
+                <input type="text" class="prefix" placeholder='Tiền tố: vd: "domain:"'>
+                <button onclick="exportCell()" class="btn-export">Export</button>
+            </div>
         </div>
     </div>
     <div class="modal fade" id="exampleModal" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
