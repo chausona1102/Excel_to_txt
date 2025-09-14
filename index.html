@@ -20,9 +20,15 @@
     #wrapper {
     }
     h1.heading {
-        padding: 20px;
-        font-family: Verdana, Geneva, Tahoma, sans-serif;
+        background-color: #ccc;
         text-align: center;
+        padding: 20px;
+        font-style: italic;
+        font-family: 'Press Start 2P', cursive;
+        text-decoration: double;
+    }
+    .btn-filter {
+        float: right;
     }
     .btn-filter, .btn-export {
         display: none;
@@ -34,15 +40,26 @@
     .prefix {
         display: none;
     }
+    label.require {
+        font-size: .8rem;
+        opacity: 0.5;        
+    }
 </style>
 <body>
     <div id="wrapper">
         <h1 class="heading">Excel to txt</h1>
         <div id="content" class="container">
-            <input type="file" id="upload" accept=".xlsx, .xls" />
+            <div class="d-flex flex-column">
+                <input type="file" id="upload" accept=".xlsx, .xls, .csv" />
+                <label class="require">(Suport: .xlsx, .xls, .csv)</label>
+            </div>
+            <div class="d-flex m-2">
+                <input type="text" class="prefix" placeholder='Tiền tố: vd: "domain:"'>
+                <button onclick="exportCell()" class="btn-export">Export to txt</button>
+            </div>
             <div id="output">
                 <button type="button" class="btn btn-filter" data-bs-toggle="modal" data-bs-target="#exampleModal">
-                    Lọc
+                    Filter
                     <i class="fa-solid fa-filter"></i>
                 </button>
                 <table class="table">
@@ -55,10 +72,6 @@
 
                     </tbody>
                 </table>
-            </div>
-            <div class="d-flex">
-                <input type="text" class="prefix" placeholder='Tiền tố: vd: "domain:"'>
-                <button onclick="exportCell()" class="btn-export">Export</button>
             </div>
         </div>
     </div>

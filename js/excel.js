@@ -2,7 +2,7 @@ const output = document.getElementById('output');
 const attributeEle = document.querySelector('.attribute');
 const valueEle = document.querySelector('.value');
 const modalBody = document.querySelector('.modal-body');
-// Global
+// Global variable
 var keys = [];
 var values = [];
 var objs = [];
@@ -125,7 +125,6 @@ function exportCell() {
     objs.forEach(obj => {
         let row = checkedColumns.map(col => obj[col]);
         exportArr.push(row);
-        console.log(row);
     });
 
     exportToTxt(exportArr);
